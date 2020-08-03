@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * @author 王乐
+ * @apiNote  获取request与response
+ */
 public class RequestUtils {
 
 
