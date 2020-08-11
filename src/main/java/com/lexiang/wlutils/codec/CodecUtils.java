@@ -18,9 +18,8 @@ public class CodecUtils {
         final byte[] array;
         int i = byteBuf.readableBytes();
         array = new byte[i];
-        byteBuf.getBytes(byteBuf.readerIndex(),array,0,i);
+        byteBuf.readBytes(array,0,i);
         return array;
-
     }
 
 }

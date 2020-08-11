@@ -16,11 +16,12 @@ public class Codec {
      * 编码
      * @param message message netty ByteBuf
      */
-    public static void ByteBufEncoder(ByteBuf message){
+    public static void ByteBufEncoder(Object arg1,ByteBuf arg2){
 
         MessagePack messagePack = new MessagePack();
         try {
-            messagePack.write(message);
+            byte[] write = messagePack.write(arg1);
+            arg2.writeBytes(write);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -32,13 +33,12 @@ public class Codec {
      * @param message netty ByteBuf
      * @return messagePack对象
      */
-    public static Value ByteBufDecoder(ByteBuf message){
+    public static Object ByteBufDecoder(ByteBuf message){
         //将byteBuf转化为字节数组
         byte[] data = CodecUtils.getBytes(message);
         MessagePack messagePack = new MessagePack();
         try {
-            Value read = messagePack.read(data);
-            return read;
+            return messagePack.read(data);
         }catch (Exception e){
             e.printStackTrace();
         }
