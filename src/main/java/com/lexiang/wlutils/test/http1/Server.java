@@ -1,21 +1,16 @@
-package com.lexiang.wlutils.netty.http1;
+package com.lexiang.wlutils.test.http1;
 
-import com.alibaba.fastjson.JSON;
-import com.lexiang.wlutils.codec.CodecUtils;
-import com.lexiang.wlutils.codec.messagepack.Codec;
-import com.lexiang.wlutils.netty.User;
 import com.lexiang.wlutils.netty.dilution.BootstrapDo;
 import com.lexiang.wlutils.netty.dilution.HandlerDo;
 import com.lexiang.wlutils.netty.http.NettyHttpRequest;
 import com.lexiang.wlutils.netty.http.NettyHttpResponse;
 import com.lexiang.wlutils.netty.http.NettyResponseAsset;
+import com.lexiang.wlutils.test.User;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.DecoderResult;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
 
@@ -66,6 +61,7 @@ public class Server {
 
             User user1 = NettyHttpRequest.postsParam(req, User.class);
             DefaultHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK,Unpooled.copiedBuffer("<html><head><p style='color:red'>"+req.method()+req.uri()+"</p></head><body>", CharsetUtil.UTF_8));
+            response.headers().set(HttpHeaderNames.CONTENT_TYPE,"image/jepg");
             ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
         }
     }

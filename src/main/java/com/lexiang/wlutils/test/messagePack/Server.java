@@ -1,16 +1,16 @@
-package com.lexiang.wlutils.netty.simple1;
+package com.lexiang.wlutils.test.messagePack;
 
+import com.lexiang.wlutils.netty.dilution.BootstrapDo;
+import com.lexiang.wlutils.netty.dilution.HandlerDo;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.websocketx.WebSocketClientProtocolHandler;
 import io.netty.util.CharsetUtil;
 
-import java.nio.charset.Charset;
+import java.net.InetSocketAddress;
 
 public class Server {
 
@@ -25,7 +25,7 @@ public class Server {
         //创建workerGroup 负责真正与client的业务处理
         EventLoopGroup workerGroup = new NioEventLoopGroup(8);
 
-        try {
+
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap
                     .group(bossGroup,workerGroup) //设置两个线程组
@@ -37,14 +37,8 @@ public class Server {
 
             //绑定端口并且同步运行
             //启动服务器
-            ChannelFuture bind = bootstrap.bind(8888).sync();
+            BootstrapDo.catchDeal(BootstrapDo.SERVER,bootstrap,new InetSocketAddress(8888),workerGroup);
 
-            //关闭通道监听，不是立马关闭
-            bind.channel().closeFuture().sync();
-        }catch (Exception e){
-            //关闭服务端
-            bossGroup.shutdownGracefully();
-        }
 
     }
 
@@ -55,14 +49,17 @@ public class Server {
         //给pipeLine设置处理器
         @Override
         protected void initChannel(SocketChannel socketChannel) throws Exception {
-            //向管道中添加handler处理器
-            socketChannel.pipeline().addLast(new serverHandler());
+            HandlerDo
+                    .init(socketChannel)
+                    .packCodec()
+                    .StickyPackCodec()
+                    .business(new serverHandler());
         }
     }
 
 
     //读取数据实例（这里我们可以读取客户端发送的消息）
-    static class serverHandler extends SimpleChannelInboundHandler<ByteBuf>{
+    static class serverHandler extends SimpleChannelInboundHandler<Object>{
 
         /**
          *
@@ -72,8 +69,9 @@ public class Server {
          */
         //服务器端接受客户端数据
         @Override
-        protected void messageReceived(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf) throws Exception {
-            System.out.println("客户端发送的消息为："+byteBuf.toString(CharsetUtil.UTF_8));
+        protected void messageReceived(ChannelHandlerContext channelHandlerContext, Object data) throws Exception {
+
+            System.out.println("客户端发送的消息为："+data.toString());
             System.out.println("客户端的地址为"+ channelHandlerContext.channel().remoteAddress());
         }
 

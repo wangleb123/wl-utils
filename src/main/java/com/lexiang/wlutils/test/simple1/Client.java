@@ -1,10 +1,5 @@
-package com.lexiang.wlutils.netty.messagePack;
+package com.lexiang.wlutils.test.simple1;
 
-import com.alibaba.fastjson.JSON;
-import com.lexiang.wlutils.netty.User;
-import com.lexiang.wlutils.netty.dilution.HandlerDo;
-import com.lexiang.wlutils.netty.handler.MsgPackDecoder;
-import com.lexiang.wlutils.netty.handler.MsgPackEncode;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -15,10 +10,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.util.CharsetUtil;
-import org.apache.commons.codec.digest.XXHash32;
 
 public class Client {
 
@@ -41,11 +33,7 @@ public class Client {
 
         @Override
         protected void initChannel(SocketChannel socketChannel) throws Exception {
-            HandlerDo
-                    .init(socketChannel)
-                    .packCodec()
-                    .StickyPackCodec()
-                    .business(new clientChannel());
+            socketChannel.pipeline().addLast(new clientChannel());
         }
     }
     static class clientChannel extends SimpleChannelInboundHandler<ByteBuf>{
@@ -59,10 +47,8 @@ public class Client {
         //当通道就绪时就会触发
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
-            User user = new User();
-            user.setName("asdsad");
-            user.setSex("asdasd");
-            ctx.writeAndFlush(user);
+            ctx.writeAndFlush(Unpooled.copiedBuffer("hello server 喵～ ",CharsetUtil.UTF_8));
+
         }
     }
 

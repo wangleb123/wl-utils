@@ -1,12 +1,8 @@
-package com.lexiang.wlutils.codec;
+package com.lexiang.wlutils.netty.byteBuf;
 
 import io.netty.buffer.ByteBuf;
-import org.msgpack.MessagePack;
-import org.msgpack.type.Value;
 
-import java.io.IOException;
-
-public class CodecUtils {
+public class ByteBufUtils {
 
     private static final String BYTE_BUF = "byteBuf";
 

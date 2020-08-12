@@ -1,15 +1,14 @@
-package com.lexiang.wlutils.codec.messagepack;
+package com.lexiang.wlutils.netty.codec;
 
-import com.lexiang.wlutils.codec.CodecUtils;
+import com.lexiang.wlutils.netty.byteBuf.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
 import org.msgpack.MessagePack;
-import org.msgpack.type.Value;
 
 
 /**
  * messagePack编解码工具类
  */
-public class Codec {
+public class MessagePackCodec {
 
 
     /**
@@ -35,7 +34,7 @@ public class Codec {
      */
     public static Object ByteBufDecoder(ByteBuf message){
         //将byteBuf转化为字节数组
-        byte[] data = CodecUtils.getBytes(message);
+        byte[] data = ByteBufUtils.getBytes(message);
         MessagePack messagePack = new MessagePack();
         try {
             return messagePack.read(data);

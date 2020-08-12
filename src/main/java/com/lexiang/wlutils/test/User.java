@@ -1,7 +1,5 @@
-package com.lexiang.wlutils.netty;
+package com.lexiang.wlutils.test;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.msgpack.annotation.Message;
 
 

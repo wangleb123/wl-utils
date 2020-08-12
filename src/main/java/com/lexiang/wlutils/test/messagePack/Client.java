@@ -1,8 +1,9 @@
-package com.lexiang.wlutils.netty.simple1;
+package com.lexiang.wlutils.test.messagePack;
 
+import com.lexiang.wlutils.netty.dilution.HandlerDo;
+import com.lexiang.wlutils.test.User;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
@@ -33,7 +34,11 @@ public class Client {
 
         @Override
         protected void initChannel(SocketChannel socketChannel) throws Exception {
-            socketChannel.pipeline().addLast(new clientChannel());
+            HandlerDo
+                    .init(socketChannel)
+                    .packCodec()
+                    .StickyPackCodec()
+                    .business(new clientChannel());
         }
     }
     static class clientChannel extends SimpleChannelInboundHandler<ByteBuf>{
@@ -47,8 +52,10 @@ public class Client {
         //当通道就绪时就会触发
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
-            ctx.writeAndFlush(Unpooled.copiedBuffer("hello server 喵～ ",CharsetUtil.UTF_8));
-
+            User user = new User();
+            user.setName("asdsad");
+            user.setSex("asdasd");
+            ctx.writeAndFlush(user);
         }
     }
 

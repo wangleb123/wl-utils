@@ -9,6 +9,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.stream.ChunkedWriteHandler;
 
 
 /**
@@ -96,11 +97,28 @@ public class HandlerDo {
 
         channelPipeline.get()
                 .pipeline()
-                .addLast(new LengthFieldBasedFrameDecoder(65535,0,
+                .addLast("base-line",new LengthFieldBasedFrameDecoder(65535,0,
                         2,0,2))
-                .addLast(new LengthFieldPrepender(2));
+                .addLast("length-field",new LengthFieldPrepender(2));
         return this;
-
     }
+
+
+    /**
+     * webSocketHandler处理
+     * @return
+     */
+    public HandlerDo webSocket(){
+        channelPipeline.get()
+                .pipeline()
+                .addLast("http-codec", new HttpServerCodec())
+                // HTTP头和body拼接成完整请求体
+                .addLast("aggregator", new HttpObjectAggregator(65536))
+                // 大文件传输策略
+                .addLast("http-chunked", new ChunkedWriteHandler());
+        return this;
+    }
+
+
 
 }
