@@ -46,7 +46,7 @@ public class AbstractNettyWebSocket implements NettyWebSocket {
      * @param channel
      * @param webSocketFrame
      */
-    private void handsShakerClose(WebSocketServerHandshaker handsShaker,Channel channel, Object webSocketFrame){
+    public void handsShakerClose(WebSocketServerHandshaker handsShaker,Channel channel, Object webSocketFrame){
         if (null == handsShaker) {
             sendMessage(channel,"该用户已经离线或者不存在该连接");
         }else {
@@ -60,7 +60,7 @@ public class AbstractNettyWebSocket implements NettyWebSocket {
      * @param channel
      * @param webSocketFrame
      */
-    private void handsShakerCloseFuture(WebSocketServerHandshaker handsShaker,Channel channel, Object webSocketFrame){
+    public void handsShakerCloseFuture(WebSocketServerHandshaker handsShaker,Channel channel, Object webSocketFrame){
         if (webSocketFrame instanceof CloseWebSocketFrame) {
           handsShakerClose(handsShaker,channel,webSocketFrame);
         }

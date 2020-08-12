@@ -51,11 +51,11 @@ public class Server {
         @Override
         protected void messageReceived(ChannelHandlerContext ctx, FullHttpRequest req) throws Exception {
             if(NettyResponseAsset.decode(req)){
-                NettyHttpResponse.sendError(ctx,HttpResponseStatus.BAD_REQUEST);
+                NettyHttpResponse.sendError(ctx,req,HttpResponseStatus.BAD_REQUEST);
                 return;
             }
             if(NettyResponseAsset.method(req,HttpMethod.GET,HttpMethod.POST)){
-               NettyHttpResponse.sendError(ctx,HttpResponseStatus.METHOD_NOT_ALLOWED);
+               NettyHttpResponse.sendError(ctx,req,HttpResponseStatus.METHOD_NOT_ALLOWED);
                return;
             }
 

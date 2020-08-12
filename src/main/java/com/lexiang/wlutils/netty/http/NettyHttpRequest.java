@@ -22,7 +22,7 @@ public class NettyHttpRequest {
      */
     public static String postsParam(FullHttpRequest request){
         ByteBuf content = request.content();
-        byte[] bytes = com.lexiang.wlutils.netty.byteBuf.ByteBufUtils.ByteBufUtils.getBytes(content);
+        byte[] bytes = ByteBufUtils.getBytes(content);
         return new String(bytes, 0, bytes.length);
     }
 
@@ -35,7 +35,7 @@ public class NettyHttpRequest {
      */
     public static <T> T postsParam(FullHttpRequest request,Class<T> clazz){
         ByteBuf content = request.content();
-        byte[] bytes = ByteBufUtils.ByteBufUtils.getBytes(content);
+        byte[] bytes = ByteBufUtils.getBytes(content);
         String s = new String(bytes, 0, bytes.length);
         return JSON.parseObject(s, clazz);
     }
