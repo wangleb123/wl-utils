@@ -12,14 +12,15 @@ target/
 .settings
 .springBeans
 .sts4-cache
-
+mvnw.*
+mvnw
+.mvn/
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
 .mvn/*
-mvnw
 mvnw.cmd
 
 ### NetBeans ###
