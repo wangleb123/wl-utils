@@ -15,12 +15,13 @@ target/
 mvnw.*
 mvnw
 .mvn/
-
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+.mvn/*
+mvnw.cmd
 
 ### NetBeans ###
 /nbproject/private/
