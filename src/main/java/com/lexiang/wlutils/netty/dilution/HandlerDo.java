@@ -34,6 +34,7 @@ public class HandlerDo {
 
     /**
      * 开启pack解码
+     * @return HandlerDo
      */
     public HandlerDo packCodec(){
         channelPipeline.get()
@@ -46,7 +47,7 @@ public class HandlerDo {
     /**
      *
      * @param channelHandler channelHandler 处理器数组（业务相关）
-     * @return
+     * @return HandlerDo
      */
     public HandlerDo business(ChannelHandler ...channelHandler){
         channelPipeline.get()
@@ -57,6 +58,7 @@ public class HandlerDo {
 
     /**
      * 开启http编解码
+     * @return HandlerDo
      */
     public HandlerDo HttpCodec(){
         channelPipeline.get()
@@ -67,6 +69,7 @@ public class HandlerDo {
 
     /**
      * 开启http消息聚合器,防止http编解码遗漏（无参数）
+     * @return HandlerDo
      */
     public HandlerDo httpAggregator(){
 
@@ -92,6 +95,7 @@ public class HandlerDo {
 
     /**
      * messagePack的防止粘包和半包处理
+     * @return HandlerDo
      */
     public HandlerDo StickyPackCodec(){
 
@@ -106,7 +110,7 @@ public class HandlerDo {
 
     /**
      * webSocketHandler处理
-     * @return
+     * @return handlerDo
      */
     public HandlerDo webSocket(){
         channelPipeline.get()

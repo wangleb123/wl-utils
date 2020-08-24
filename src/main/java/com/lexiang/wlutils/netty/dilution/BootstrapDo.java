@@ -1,5 +1,6 @@
 package com.lexiang.wlutils.netty.dilution;
 
+import com.lexiang.wlutils.netty.websocket.tranfer.AbstractNettyWebSocket;
 import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
@@ -8,11 +9,16 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
 public class BootstrapDo {
+
+    private static final Log logger = LogFactory.getLog(BootstrapDo.class);
+
     public static final int CLIENT = 1;
 
     public static final int SERVER = 2;
@@ -20,13 +26,15 @@ public class BootstrapDo {
 
     /**
      * bootStrap初始化，捕捉错误等等
+     * @param type socket类型
      * @param bootstrap netty起始对象
      * @param address 地址信息
      * @param eventLoopGroup reactor线程组
      */
-    public static void catchDeal(int type,AbstractBootstrap<?,?> bootstrap, InetSocketAddress address, EventLoopGroup...eventLoopGroup){
+    public static void catchDeal(int type,AbstractBootstrap<?,?> bootstrap, InetSocketAddress address, EventLoopGroup ...eventLoopGroup){
 
         try {
+            Long beginTime = System.currentTimeMillis();
             ChannelFuture f = null;
             //绑定address地址
             if (type == CLIENT) {
@@ -38,6 +46,8 @@ public class BootstrapDo {
             //预关闭
             assert f != null;
             f.channel().closeFuture().sync();
+            Long endTime = System.currentTimeMillis();
+            logger.info("服务器启动完成，耗时:"+(endTime - beginTime)+"毫秒,已经在端口：["+address.getPort()+"]进行阻塞等待");
         }catch (Exception e){
             e.printStackTrace();
         }finally {
@@ -69,12 +79,6 @@ public class BootstrapDo {
 
     public static EventLoopGroup getWorkerGroup(int threadNum){
         return new NioEventLoopGroup(threadNum);
-    }
-
-
-
-    public static EventLoopGroup getBossGroup(int bossGroupNum){
-        return new NioEventLoopGroup(bossGroupNum);
     }
 
 

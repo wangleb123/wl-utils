@@ -13,7 +13,8 @@ public class MessagePackCodec {
 
     /**
      * 编码
-     * @param message message netty ByteBuf
+     * @param arg1 需要编码的数据
+     * @param arg2 编码完成后的数据
      */
     public static void ByteBufEncoder(Object arg1,ByteBuf arg2){
 

@@ -42,9 +42,9 @@ public class AbstractNettyWebSocket implements NettyWebSocket {
 
     /**
      * 关闭webSocket握手
-     * @param handsShaker
-     * @param channel
-     * @param webSocketFrame
+     * @param handsShaker webSocket握手起到
+     * @param channel 通道
+     * @param webSocketFrame webSocket数据
      */
     public void handsShakerClose(WebSocketServerHandshaker handsShaker,Channel channel, Object webSocketFrame){
         if (null == handsShaker) {
@@ -56,9 +56,9 @@ public class AbstractNettyWebSocket implements NettyWebSocket {
 
     /**
      * 预关闭webSocket握手
-     * @param handsShaker
-     * @param channel
-     * @param webSocketFrame
+     * @param handsShaker webSocket握手起到
+     * @param channel 通道
+     * @param webSocketFrame webSocket数据
      */
     public void handsShakerCloseFuture(WebSocketServerHandshaker handsShaker,Channel channel, Object webSocketFrame){
         if (webSocketFrame instanceof CloseWebSocketFrame) {
