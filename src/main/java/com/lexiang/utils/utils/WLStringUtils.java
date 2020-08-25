@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class WLStringUtils {
 
+
     /**
      * 字符串判空（包含null 和 " "）
      * @param data 传入的字符串
@@ -39,10 +40,8 @@ public class WLStringUtils {
      * @return 是否为空
      */
     public static boolean isEmpty(String data){
-        return !StringUtils.isEmpty(data);
+        return StringUtils.isEmpty(data);
     }
-
-
 
     public static void main(String[] args) {
 
