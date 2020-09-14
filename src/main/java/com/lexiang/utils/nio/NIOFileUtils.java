@@ -41,7 +41,7 @@ public class NIOFileUtils {
             .fileDic("/Users/wangle/Desktop/学习/boot-starter/wl-utils/src/main/java/com/lexiang/utils/")
             .fileName("2.txt")
             .createType(FileCreateType.ADD_DATA)
-            .createFileOrDic("我是个java开发红参数1⃣️2⃣️3⃣️");
+            .date("我是个java开发红参数1⃣️2⃣️3⃣️");
 
     }
 

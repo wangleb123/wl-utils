@@ -75,15 +75,15 @@ public class RSAUtils {
      * @return
      * @throws Exception
      */
-    public static Map<String, Object> genKeyPair() throws Exception {
+    public static Map<String, String> genKeyPair() throws Exception {
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
         keyPairGen.initialize(1024);
         KeyPair keyPair = keyPairGen.generateKeyPair();
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
         RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-        Map<String, Object> keyMap = new HashMap<String, Object>(2);
-        keyMap.put(PUBLIC_KEY, publicKey);
-        keyMap.put(PRIVATE_KEY, privateKey);
+        Map<String, String> keyMap = new HashMap<String, String>(2);
+        keyMap.put(PUBLIC_KEY, Base64Utils.encode(publicKey.getEncoded()));
+        keyMap.put(PRIVATE_KEY, Base64Utils.encode(privateKey.getEncoded()));
         return keyMap;
     }
 
@@ -319,6 +319,13 @@ public class RSAUtils {
             throws Exception {
         Key key = (Key) keyMap.get(PUBLIC_KEY);
         return Base64Utils.encode(key.getEncoded());
+    }
+
+    public static void main(String[] args) throws Exception {
+        RSAUtils rsaUtils = new RSAUtils();
+        Map<String, String> keyPair = rsaUtils.genKeyPair();
+        System.out.println("公"+keyPair.get(PUBLIC_KEY) +"\n"+"私"+keyPair.get(PRIVATE_KEY) );
+
     }
 
 }

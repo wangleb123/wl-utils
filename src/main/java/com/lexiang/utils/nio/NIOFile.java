@@ -22,6 +22,7 @@ import java.nio.file.Paths;
 public class NIOFile {
 
 
+
     /**
      * 文件夹路径
      */
@@ -35,7 +36,7 @@ public class NIOFile {
     /**
      * isCreate
      */
-    private int createType;
+    private int createType = FileCreateType.ADD_DATA;
 
     private int capacity = 1024;
 
@@ -66,7 +67,8 @@ public class NIOFile {
     }
 
 
-    public void createFileOrDic(Object data) throws Exception {
+
+    public void date(Object data) throws Exception {
         this.path = NIOFileUtils.pathHand(this.path, this.fileName, this.createType);
         String fullPath = this.path + this.fileName;
         if (Files.exists(Paths.get(this.path))) {
