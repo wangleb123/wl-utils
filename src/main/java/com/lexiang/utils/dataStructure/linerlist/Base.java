@@ -1,4 +1,4 @@
-package com.lexiang.utils.dataStructure;
+package com.lexiang.utils.dataStructure.linerlist;
 
 public class Base {
 

@@ -1,9 +1,11 @@
-package com.lexiang.utils.dataStructure.linerlist;
-import java.util.*;
+package com.lexiang.utils.dataStructure.linerlist.seq;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
- * 线性表的顺序存储结构实现
+ * 线性表的顺序存储结构实现（顺序表）
  * @param <T>
  */
 public class SeqList<T>{
@@ -12,7 +14,7 @@ public class SeqList<T>{
     /**
      * 存放线性表元素的数组
      */
-    transient Object[] elementData;
+    private transient Object[] elementData;
 
     /**
      * 线性表默认默认空间大小
@@ -87,9 +89,10 @@ public class SeqList<T>{
      * 添加数据
      * @param o 数据
      */
-    public void add(Object o) {
+    public int insert(T o) {
         extendElement();
         this.elementData[this.length++] = o;
+        return this.length - 1;
     }
 
     /**
@@ -143,22 +146,26 @@ public class SeqList<T>{
 
     }
 
-    public void insert(int index,Object o){
-        extendElement();
+    public void insert(int index,T o){
         if(index > this.length -1 ){
-            this.elementData[length++] = o;
+            insert(o);
         }else {
-            for (int i = index; i < this.length; i++) {
+            extendElement();
+            for (int i = this.length-1;  i >=index ; i--) {
                 this.elementData[i+1] = this.elementData[i];
             }
             this.elementData[index] = o;
+            length ++ ;
         }
-        this.length++;
 
     }
 
 
-
+    /**
+     * 查找
+     * @param o 需查找的元素
+     * @return  元素所在线性表的小表
+     */
     public ArrayList<Integer> indexOf(Object o){
         ArrayList<Integer> indexOf = new ArrayList<>();
         if(o == null){
@@ -177,6 +184,21 @@ public class SeqList<T>{
         }
         return indexOf;
     }
+
+
+//    public boolean equals(SeqList<T> list){
+//       if(list.dataSize() != this.length){
+//           return false;
+//       }else {
+//           for (int i = 0; i < this.length; i++) {
+//               if(elementData[i] != null){
+//
+//               }else {
+//
+//               }
+//           }
+//       }
+//    }
 
 
     /**
@@ -202,21 +224,5 @@ public class SeqList<T>{
     }
 
 
-    public static void main(String[] args) throws Exception{
-        SeqList<String> linearList = new SeqList<>();
-        for (int i = 0; i < 20; i++) {
-            linearList.add(Integer.toString(i));
-        }
-        linearList.add("22");
-        //linearList.remove(0);
-        //linearList.clear();
 
-        //linearList.remove(3);
-        linearList.isEmpty();
-        System.out.println(linearList.toString());
-
-        SeqList<String> linearList1 = new SeqList<>();
-        System.out.println(linearList1.toString());
-
-    }
 }
