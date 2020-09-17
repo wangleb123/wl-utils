@@ -1,5 +1,7 @@
 package com.lexiang.utils.dataStructure.linerlist;
 
+import com.lexiang.utils.dataStructure.linerlist.seq.SeqList;
+
 public class Base {
 
     public static void main(String[] args) throws Exception{
